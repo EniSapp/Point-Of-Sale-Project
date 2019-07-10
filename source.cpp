@@ -115,9 +115,12 @@ void runTransaction(int numOfTxs, string date) {
 	//Calculate subTotal as the sum of all Value variables, tax as taxRate * subTotal, and total as subTotal + tax
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
+	//Output receipt header
 	cout << "........................................................" << endl << "\t    RECEIPT - SALE SU0619 PRODUCT" << endl
 		<< "........................................................" << endl << "Date:" << setw(44) << right << date << endl << left << setw(45) << "Sale transaction:" << setfill('0') << setw(4) << right << (numOfTxs + 1)
 		<< setfill(' ') << endl;
+		
+	//Print the data input formatted as a receipt
 	printReportValuesToScreen(su6191Sold, su6192Sold, su6193Sold, su6191Value, su6192Value, su6193Value, subTotal, tax, total, true);
 	cout << setw(41) << left << "Amount paid:" << setw(8) << right << amountPaid << endl << setw(41) << left << "Balance:" << setw(8) << right << (amountPaid - total) << endl << endl;
 
