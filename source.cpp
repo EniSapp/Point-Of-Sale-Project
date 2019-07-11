@@ -148,10 +148,11 @@ void runDailyReport(string year, string month, string day) {
 	inputStream.open("daySale_" + year + month + day + ".txt");
 
 	//If the daySale file representing the requested day doesn't exist then output an error message, create an output stream on the monthSale file it would fall
-	//under, and add a line with "dayNum 0 0 0" representing no sales that day.
+	//under, and add a line with "dayNum 0 0 0" representing no sales that day.  Wait for user input before returning to menu.
 	if (!inputStream) {
 		cout << "The file doesn't exist" << endl;
 		printToFile("monthSale_" + year + month + ".txt", day, 0, 0, 0);
+		system("pause");
 		return;
 	}
 
@@ -186,10 +187,11 @@ void runMonthlyReport(string year, string month) {
 	inputStream.open("monthSale_" + year + month + ".txt");
 
 	//If the monthSale file representing the requested month doesn't exist then output an error message, create an output stream on the yearSale file it would fall
-	//under, and add a line with "monthNum 0 0 0" representing no sales that month.
+	//under, and add a line with "monthNum 0 0 0" representing no sales that month.  Wait for user input before returning to menu.
 	if (!inputStream) {
 		cout << "The file doesn't exist" << endl;
 		printToFile("yearSale_" + year + ".txt", month, 0, 0, 0);
+		system("pause");
 		return;
 	}
 
