@@ -151,9 +151,7 @@ void runDailyReport(string year, string month, string day) {
 	//under, and add a line with "dayNum 0 0 0" representing no sales that day.
 	if (!inputStream) {
 		cout << "The file doesn't exist" << endl;
-		ofstream outputStream;
-		outputStream.open("monthSale_" + year + month + ".txt", ios::app);
-		outputStream << day << " 0 0 0" << endl;
+		printToFile("monthSale_" + year + month + ".txt", day, 0, 0, 0);
 		return;
 	}
 
@@ -191,9 +189,7 @@ void runMonthlyReport(string year, string month) {
 	//under, and add a line with "monthNum 0 0 0" representing no sales that month.
 	if (!inputStream) {
 		cout << "The file doesn't exist" << endl;
-		ofstream outputStream;
-		outputStream.open("yearSale_" + year + ".txt", ios::app);
-		outputStream << month << " 0 0 0" << endl;
+		printToFile("yearSale_" + year + ".txt", month, 0, 0, 0);
 		return;
 	}
 
