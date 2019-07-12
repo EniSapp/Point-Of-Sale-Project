@@ -40,7 +40,7 @@ int main() {
 	//Sets all floats to display with exactly 2 decimal places.  Works for both currency and tax rate
 	cout << fixed << setprecision(2) << showpoint;
 
-
+	//While sentinel endExecution has not been flipped to true
 	while (!endExecution) {
 		//This switch uses promptForMenu() to get a integer representing what the user would like to do.  If it is a daily, monthly, or yearly report it generates the file name and
 		//passes it to runReport().  If it is a sale then it calls runTransaction() to handle the sale and adds one to the number of sales that have been completed.  Otherwise, it trips the
@@ -69,9 +69,12 @@ int main() {
 			runYearlyReport(userResp);
 			break;
 		case 0:
-			//Set sentinel variable to end the while loop and break;
+			//Set sentinel endExecution to true to end the while loop and break;
 			endExecution = true;
 			break;
+		default:
+			//If an invalid number was input, output error message
+			cout << "Invalid input.  Please enter an integer between 0-3" << endl;
 		}
 	}
 }
@@ -144,7 +147,7 @@ void runDailyReport(string year, string month, string day) {
 	int su6191SoldInDay = 0, su6192SoldInDay = 0, su6193SoldInDay = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
-	//Attempt to open the report file
+	//Attempt to open an ifstream on "daySale_YYMMDD.txt"
 	ifstream inputStream;
 	inputStream.open("daySale_" + year + month + day + ".txt");
 
@@ -157,12 +160,14 @@ void runDailyReport(string year, string month, string day) {
 		return;
 	}
 
-	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
+	//Fill su####SoldInDay variables with data from inputStream
 	extractValuesFromFile(inputStream, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
-	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
-	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
-	//stuff to do here
+	//Calculate su####Value variables based on su####SoldInDay variables
+	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
+
+	//Calculate subTotal as su6191Value + su6192Value + su6193Value, tax as subTotal * taxRate, and total as subTotal + total
+	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << day << "/" << year << endl;
@@ -179,11 +184,11 @@ void runDailyReport(string year, string month, string day) {
 
 //Handles the full process of displaying a end-of-month report and outputting results to "yearSale_YY.txt"
 void runMonthlyReport(string year, string month) {
-	//Variables to hold the number of each item sold this month, and the money made from each of those sales
+	//Variables to hold the number of each item sold this month, and the money made from each of those categories of sales.
 	int su6191SoldInMonth = 0, su6192SoldInMonth = 0, su6193SoldInMonth = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
-	//Attempt to open the report file
+	//Attempt to open an ifstream on "monthSale_YYMM.txt"
 	ifstream inputStream;
 	inputStream.open("monthSale_" + year + month + ".txt");
 
@@ -196,15 +201,19 @@ void runMonthlyReport(string year, string month) {
 		return;
 	}
 
-	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
+	//Fill su####SoldInMonth variables with data from inputStream
 	extractValuesFromFile(inputStream, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
+
+	//Calculate su####Value variables based on su####SoldInMonth variables
 	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
+
+	//Calculate subTotal as su6191Value + su6192Value + su6193Value, tax as subTotal * taxRate, and total as subTotal + total
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
-	//Prints the header for the report
+	//Print the header for the report
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << year << endl;
 
-	//Print the data extracted from the file to the screen.
+	//Print report data to screen
 	printReportValuesToScreen(su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
 	//Keep output on screen until the user presses any key
@@ -220,18 +229,24 @@ void runYearlyReport(string year) {
 	int su6191SoldInYear = 0, su6192SoldInYear = 0, su6193SoldInYear = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
-	//Attempt to open the report file
+	//Attempt to open an ifstream on "yearSale_YY.txt"
 	ifstream inputStream;
 	inputStream.open("yearSale_" + year + ".txt");
 
+	//If the the report is not found, print an error message and return to main
 	if (!inputStream) {
 		cout << "The file does not exist" << endl;
+		system("pause");
 		return;
 	}
 
-	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
+	//Fill su####SoldInYear variables with data from inputStream
 	extractValuesFromFile(inputStream, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
+
+	//Calculate su####Value variables based on su####SoldInYear variables
 	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
+
+	//Calculate subTotal as su6191Value + su6192Value + su6193Value, tax as subTotal * taxRate, and total as subTotal + total
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
 	//Prints the header for the report
