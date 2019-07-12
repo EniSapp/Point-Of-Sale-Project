@@ -8,7 +8,7 @@ using namespace std;
 //Global constants representing the price of each item.  Needed for running both reports and transactions
 const double su6191Price = 10.99, su6192Price = 12.99, su6193Price = 14.99, taxRate = 0.0825;
 
-//function prototypes
+//Function prototypes
 int promptForMenu(string);
 void printReportValuesToScreen(int, int, int, double, double, double, double, double, double, bool);
 void extractValuesFromFile(ifstream&, int&, int&, int&);
@@ -22,13 +22,13 @@ bool fileExists(string);
 void printToFile(string, string, int, int, int);
 
 int main() {
-	//Sentenel variable to end while statement when user inputs 0 at menu
+	//Sentinel variable to end while statement when user inputs 0 at menu
 	bool endExecution = false;
 
 	//Number of transactions that have been done today.
 	int numOfTxs = 0;
 
-	//Variable to hold the user's reponse when prompted for the report date range.  Used
+	//Variable to hold the user's response when prompted for the report date range.  Used
 	//in every switch case except 1 and 0.
 	string userResp;
 
@@ -44,7 +44,7 @@ int main() {
 	while (!endExecution) {
 		//This switch uses promptForMenu() to get a integer representing what the user would like to do.  If it is a daily, monthly, or yearly report it generates the file name and
 		//passes it to runReport().  If it is a sale then it calls runTransaction() to handle the sale and adds one to the number of sales that have been completed.  Otherwise, it trips the
-		//sentenal variable to end execution
+		//sentential variable to end execution
 		switch (promptForMenu(date)) {
 		case 1:
 			runTransaction(numOfTxs, date);
@@ -69,7 +69,7 @@ int main() {
 			runYearlyReport(userResp);
 			break;
 		case 0:
-			//Set sentenel variable to end the while loop and break;
+			//Set sentinel variable to end the while loop and break;
 			endExecution = true;
 			break;
 		}
@@ -94,24 +94,24 @@ int promptForMenu(string date) {
 	return userResponse;
 }
 
-//Handles the full process of inputting a transaction, outputting the receipt, and outputing transaction to "daySale_YYMMDD.txt"
+//Handles the full process of inputting a transaction, outputting the receipt, and outputting transaction to "daySale_YYMMDD.txt"
 void runTransaction(int numOfTxs, string date) {
-	int su6191Sold, su6192Sold, su6193Sold;
+	int su6191SoldInTx, su6192SoldInTx, su6193SoldInTx;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total, amountPaid;
 
 	//Prompt the user for the number of each item sold and store the result in the proper "sold" variable.
 	cout << "Enter the number of of SU6191 sold" << endl;
-	cin >> su6191Sold;
+	cin >> su6191SoldInTx;
 	cout << "Enter the number of SU6192 sold" << endl;
-	cin >> su6192Sold;
+	cin >> su6192SoldInTx;
 	cout << "Enter the number of SU6193 sold" << endl;
-	cin >> su6193Sold;
+	cin >> su6193SoldInTx;
 	cout << "Enter the amount the customer paid" << endl;
 	cin >> amountPaid;
 	
 
 	//Calculate values as itemPrice * itemsSold
-	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191Sold, su6192Sold, su6193Sold);
+	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInTx, su6192SoldInTx, su6193SoldInTx);
 
 	//Calculate subTotal as the sum of all Value variables, tax as taxRate * subTotal, and total as subTotal + tax
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
@@ -122,19 +122,19 @@ void runTransaction(int numOfTxs, string date) {
 		<< setfill(' ') << endl;
 		
 	//Print the data input formatted as a receipt
-	printReportValuesToScreen(su6191Sold, su6192Sold, su6193Sold, su6191Value, su6192Value, su6193Value, subTotal, tax, total, true);
+	printReportValuesToScreen(su6191SoldInTx, su6192SoldInTx, su6193SoldInTx, su6191Value, su6192Value, su6193Value, subTotal, tax, total, true);
 	cout << setw(41) << left << "Amount paid:" << setw(8) << right << amountPaid << endl << setw(41) << left << "Balance:" << setw(8) << right << (amountPaid - total) << endl << endl;
 
 	//Keep output on screen until the user presses any key
 	system("pause");
 
-	//Generates the Transaction ID as DD#### where #### is numOfTxs+1 with leading zeroes to take exactly 4 spaces
+	//Generates the Transaction ID as DD#### where #### is numOfTxs+1 with leading zeros to take exactly 4 spaces
 	string firstColumn;
 	stringstream firstColumnAsStream;
 	firstColumnAsStream << date.substr(3, 2) << setw(4) << setfill('0') << right << (numOfTxs + 1);
 	firstColumn = firstColumnAsStream.str();
 
-	//Output "DD#### su6191Sold su6192Sold su6193Sold" to "daySale_YYMMDD.txt"
+	//Output "DD#### su6191SoldInTx su6192SoldInTx su6193SoldInTx" to "daySale_YYMMDD.txt"
 	printToFile("daySale_" + date.substr(6, 2) + date.substr(0, 2) + date.substr(3, 2) + ".txt", firstColumn, su6191Sold, su6192Sold, su6193Sold);
 }
 
@@ -244,7 +244,7 @@ void runYearlyReport(string year) {
 	system("pause");
 }
 
-//Extracts the number of each type of item sold from inputStream and chaanges su####Sold variables to reflect results
+//Extracts the number of each type of item sold from inputStream and changes su####Sold variables to reflect results
 void extractValuesFromFile(ifstream &inputStream, int &su6191Sold, int &su6192Sold, int &su6193Sold) {
 	while (true) {
 		//Variables to store the number of each item sold in this transaction
