@@ -83,7 +83,7 @@ int promptForMenu(string date) {
 
 	//Clear the screen before displaying menu.
 	system("cls");
-	
+
 	//Prints menu prompt
 	cout << "SALE SUMMER 2019 PRODUCTS - DANIEL SAPP" << endl << setw(13) << "Today: " << date << endl
 		<< "1.\tSale Product" << endl << "2.\tEnding day sale report" << endl << "3.\tEnding month sale report" << endl << "4.\tEnding year sale report"
@@ -108,7 +108,7 @@ void runTransaction(int numOfTxs, string date) {
 	cin >> su6193SoldInTx;
 	cout << "Enter the amount the customer paid" << endl;
 	cin >> amountPaid;
-	
+
 
 	//Calculate values as itemPrice * itemsSold
 	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInTx, su6192SoldInTx, su6193SoldInTx);
@@ -120,7 +120,7 @@ void runTransaction(int numOfTxs, string date) {
 	cout << "........................................................" << endl << "\t    RECEIPT - SALE SU0619 PRODUCT" << endl
 		<< "........................................................" << endl << "Date:" << setw(44) << right << date << endl << left << setw(45) << "Sale transaction:" << setfill('0') << setw(4) << right << (numOfTxs + 1)
 		<< setfill(' ') << endl;
-		
+
 	//Print the data input formatted as a receipt
 	printReportValuesToScreen(su6191SoldInTx, su6192SoldInTx, su6193SoldInTx, su6191Value, su6192Value, su6193Value, subTotal, tax, total, true);
 	cout << setw(41) << left << "Amount paid:" << setw(8) << right << amountPaid << endl << setw(41) << left << "Balance:" << setw(8) << right << (amountPaid - total) << endl << endl;
@@ -135,7 +135,7 @@ void runTransaction(int numOfTxs, string date) {
 	firstColumn = firstColumnAsStream.str();
 
 	//Output "DD#### su6191SoldInTx su6192SoldInTx su6193SoldInTx" to "daySale_YYMMDD.txt"
-	printToFile("daySale_" + date.substr(6, 2) + date.substr(0, 2) + date.substr(3, 2) + ".txt", firstColumn, su6191Sold, su6192Sold, su6193Sold);
+	printToFile("daySale_" + date.substr(6, 2) + date.substr(0, 2) + date.substr(3, 2) + ".txt", firstColumn, su6191SoldInTx, su6192SoldInTx, su6193SoldInTx);
 }
 
 //Handles the full process of displaying a end-of-day report and outputting results to "monthSale_MMYY.txt"
@@ -163,16 +163,16 @@ void runDailyReport(string year, string month, string day) {
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
 	//stuff to do here
-	
+
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << day << "/" << year << endl;
-	
+
 	//Print the data extracted from the file to the screen.
 	printReportValuesToScreen(su6191SoldInDay, su6192SoldInDay, su6193SoldInDay, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
 	//Keep output on screen until the user presses any key
 	system("pause");
-	
+
 	//Output "DD su6191SoldInDay su6192SoldInDay su6193SoldInDay" to "monthSale_YYMM.txt"
 	printToFile("monthSale_" + year + month + ".txt", day, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
 }
@@ -200,10 +200,10 @@ void runMonthlyReport(string year, string month) {
 	extractValuesFromFile(inputStream, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
 	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
-	
+
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << year << endl;
-	
+
 	//Print the data extracted from the file to the screen.
 	printReportValuesToScreen(su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
@@ -233,10 +233,10 @@ void runYearlyReport(string year) {
 	extractValuesFromFile(inputStream, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
 	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
-	
+
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - 20" << year << endl;
-	
+
 	//Print the data extracted from the file to the screen.
 	printReportValuesToScreen(su6191SoldInYear, su6192SoldInYear, su6193SoldInYear, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
