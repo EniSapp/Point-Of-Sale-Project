@@ -141,7 +141,7 @@ void runTransaction(int numOfTxs, string date) {
 //Handles the full process of displaying a end-of-day report and outputting results to "monthSale_MMYY.txt"
 void runDailyReport(string year, string month, string day) {
 	//Variables to hold the number of each item sold, and the money made from each of those sales
-	int su6191Sold = 0, su6192Sold = 0, su6193Sold = 0;
+	int su6191SoldInDay = 0, su6192SoldInDay = 0, su6193SoldInDay = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
 	//Attempt to open the report file
@@ -158,8 +158,8 @@ void runDailyReport(string year, string month, string day) {
 	}
 
 	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
-	extractValuesFromFile(inputStream, su6191Sold, su6192Sold, su6193Sold);
-	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191Sold, su6192Sold, su6193Sold);
+	extractValuesFromFile(inputStream, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
+	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 
 	//stuff to do here
@@ -168,13 +168,13 @@ void runDailyReport(string year, string month, string day) {
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << day << "/" << year << endl;
 	
 	//Print the data extracted from the file to the screen.
-	printReportValuesToScreen(su6191Sold, su6192Sold, su6193Sold, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
+	printReportValuesToScreen(su6191SoldInDay, su6192SoldInDay, su6193SoldInDay, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
 	//Keep output on screen until the user presses any key
 	system("pause");
 	
-	//Output "DD su6191Sold su6192Sold su6193Sold" to "monthSale_YYMM.txt"
-	printToFile("monthSale_" + year + month + ".txt", day, su6191Sold, su6192Sold, su6193Sold);
+	//Output "DD su6191SoldInDay su6192SoldInDay su6193SoldInDay" to "monthSale_YYMM.txt"
+	printToFile("monthSale_" + year + month + ".txt", day, su6191SoldInDay, su6192SoldInDay, su6193SoldInDay);
 }
 
 //Handles the full process of displaying a end-of-month report and outputting results to "yearSale_YY.txt"
