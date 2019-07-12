@@ -140,7 +140,7 @@ void runTransaction(int numOfTxs, string date) {
 
 //Handles the full process of displaying a end-of-day report and outputting results to "monthSale_MMYY.txt"
 void runDailyReport(string year, string month, string day) {
-	//Variables to hold the number of each item sold, and the money made from each of those sales
+	//Variables to hold the number of each item sold today, and the money made from each of those categoes of sales
 	int su6191SoldInDay = 0, su6192SoldInDay = 0, su6193SoldInDay = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
@@ -179,8 +179,8 @@ void runDailyReport(string year, string month, string day) {
 
 //Handles the full process of displaying a end-of-month report and outputting results to "yearSale_YY.txt"
 void runMonthlyReport(string year, string month) {
-	//Variables to hold the number of each item sold, and the money made from each of those sales
-	int su6191Sold = 0, su6192Sold = 0, su6193Sold = 0;
+	//Variables to hold the number of each item sold this month, and the money made from each of those sales
+	int su6191SoldInMonth = 0, su6192SoldInMonth = 0, su6193SoldInMonth = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
 	//Attempt to open the report file
@@ -197,21 +197,21 @@ void runMonthlyReport(string year, string month) {
 	}
 
 	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
-	extractValuesFromFile(inputStream, su6191Sold, su6192Sold, su6193Sold);
-	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191Sold, su6192Sold, su6193Sold);
+	extractValuesFromFile(inputStream, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
+	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 	
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - " << month << "/" << year << endl;
 	
 	//Print the data extracted from the file to the screen.
-	printReportValuesToScreen(su6191Sold, su6192Sold, su6193Sold, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
+	printReportValuesToScreen(su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
 	//Keep output on screen until the user presses any key
 	system("pause");
 
 	//TODO: COMMENTME
-	printToFile("yearSale_" + year + ".txt", month, su6191Sold, su6192Sold, su6193Sold);
+	printToFile("yearSale_" + year + ".txt", month, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
 }
 
 //Handles the full process of displaying a end-of-year report
