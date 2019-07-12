@@ -85,8 +85,9 @@ int promptForMenu(string date) {
 	system("cls");
 	
 	//Prints menu prompt
-	cout << "SALE SUMMER 2019 PRODUCTS - DANIEL SAPP\n" << setw(13) << "Today: " << date
-		<< "\n1.\tSale Product\n2.\tEnding day sale report\n3.\tEnding month sale report\n4.\tEnding year sale report\n0.\tExit\n";
+	cout << "SALE SUMMER 2019 PRODUCTS - DANIEL SAPP" << endl << setw(13) << "Today: " << date << endl
+		<< "1.\tSale Product" << endl << "2.\tEnding day sale report" << endl << "3.\tEnding month sale report" << endl << "4.\tEnding year sale report"
+		<< endl << "0.\tExit" << endl;
 
 	//Stores user input in an int and returns it.
 	cin >> userResponse;
