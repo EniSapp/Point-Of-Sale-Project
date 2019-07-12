@@ -216,8 +216,8 @@ void runMonthlyReport(string year, string month) {
 
 //Handles the full process of displaying a end-of-year report
 void runYearlyReport(string year) {
-	//Variables to hold the number of each item sold, and the money made from each of those sales
-	int su6191Sold = 0, su6192Sold = 0, su6193Sold = 0;
+	//Variables to hold the number of each item sold this year, and the money made from each of those categories of sales
+	int su6191SoldInYear = 0, su6192SoldInYear = 0, su6193SoldInYear = 0;
 	double su6191Value, su6192Value, su6193Value, subTotal, tax, total;
 
 	//Attempt to open the report file
@@ -230,15 +230,15 @@ void runYearlyReport(string year) {
 	}
 
 	//Fill the su####Sold, su####Value, subTotal, tax, and total values based on information extracted from the input stream.
-	extractValuesFromFile(inputStream, su6191Sold, su6192Sold, su6193Sold);
-	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191Sold, su6192Sold, su6193Sold);
+	extractValuesFromFile(inputStream, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
+	calculateValueVariables(su6191Value, su6192Value, su6193Value, su6191SoldInYear, su6192SoldInYear, su6193SoldInYear);
 	calculateTotalsAndTaxes(su6191Value, su6192Value, su6193Value, subTotal, tax, total);
 	
 	//Prints the header for the report
 	cout << "\tSALE SU619 PRODUCTS - 20" << year << endl;
 	
 	//Print the data extracted from the file to the screen.
-	printReportValuesToScreen(su6191Sold, su6192Sold, su6193Sold, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
+	printReportValuesToScreen(su6191SoldInYear, su6192SoldInYear, su6193SoldInYear, su6191Value, su6192Value, su6193Value, subTotal, tax, total, false);
 
 	//Keep output on screen until the user presses any key
 	system("pause");
