@@ -219,7 +219,7 @@ void runMonthlyReport(string year, string month) {
 	//Keep output on screen until the user presses any key
 	system("pause");
 
-	//TODO: COMMENTME
+	//Output "MM su6191SoldInMonth su6192SoldInMonth su6193SoldInMonth" to yearSale_YY.txt
 	printToFile("yearSale_" + year + ".txt", month, su6191SoldInMonth, su6192SoldInMonth, su6193SoldInMonth);
 }
 
