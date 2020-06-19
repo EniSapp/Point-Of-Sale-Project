@@ -1,4 +1,4 @@
-# POSProject
+# Point Of Sale Project
 
 This program was the final exam of a Introduction to C++ course.  It is a simulated point-of-sale system that will run transactions and print
 reports for daily, monthly, or yearly periods.
